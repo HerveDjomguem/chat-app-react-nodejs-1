@@ -14,6 +14,7 @@ module.exports.getMessages = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        isFile:msg.message.isFile
       };
     });
     res.json(projectedMessages);
@@ -26,7 +27,7 @@ module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
     const data = await Messages.create({
-      message: { text: message },
+      message: { text: message,isFile:false },
       users: [from, to],
       sender: from,
     });

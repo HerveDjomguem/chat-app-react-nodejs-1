@@ -20,6 +20,7 @@ export default function ChatContainer({ currentChat, socket }) {
       from: data._id,
       to: currentChat._id,
     });
+
     setMessages(response.data);
   }, [currentChat]);
 
@@ -50,7 +51,7 @@ export default function ChatContainer({ currentChat, socket }) {
     });
 
     const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
+    msgs.push({ fromSelf: true, message: msg, isFile: false });
     setMessages(msgs);
   };
 
@@ -65,7 +66,10 @@ export default function ChatContainer({ currentChat, socket }) {
         from: data._id,
         to: currentChat._id,
         messages: msg.pathLink,
-      })
+      });
+      const msgs = [...messages];
+      msgs.push({ fromSelf: true, message: msg.pathLink, isFile: true });
+      setMessages(msgs);
     }
 
   }
@@ -76,10 +80,18 @@ export default function ChatContainer({ currentChat, socket }) {
       console.log(msg)
       setAudio(msg);
       handleSendAudio(msg);
+
     });
 
   }, [audio]);
 
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("message-file-recieve", (blob) => {
+        setArrivalMessage({ fromSelf: false, message: blob.pathLink, isFile: true });
+      })
+    }
+  }, []);
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
@@ -114,18 +126,34 @@ export default function ChatContainer({ currentChat, socket }) {
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${message.fromSelf ? "sended" : "recieved"
-                  }`}
-              >
-                <div className="content ">
-                  <p>{message.message}</p>
+
+          if (message.isFile == true) {
+            return (
+              <div ref={scrollRef} key={uuidv4()}>
+                <div
+                  className={`message ${message.fromSelf ? "sended" : "recieved"
+                    }`}
+                >
+                  <div className="content ">
+                    <audio src={message.message} controls />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          } else {
+            return (
+              <div ref={scrollRef} key={uuidv4()}>
+                <div
+                  className={`message ${message.fromSelf ? "sended" : "recieved"
+                    }`}
+                >
+                  <div className="content ">
+                    <p>{message.message}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          }
         })}
       </div>
       <ChatInput handleSendMsg={handleSendMsg} />

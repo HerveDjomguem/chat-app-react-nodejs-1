@@ -83,7 +83,8 @@ io.on("connection", (socket) => {
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket&&BLOB) {
-      socket.to(sendUserSocket).emit("message-file",BLOB.pathLink);;
+      socket.to(sendUserSocket).emit("message-file",BLOB.pathLink);
+      socket.to(sendUserSocket).emit("message-file-recieve",BLOB);
     }else if(sendUserSocket){
       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
     }

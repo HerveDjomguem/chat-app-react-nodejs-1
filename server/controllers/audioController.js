@@ -52,7 +52,7 @@ module.exports.addAudio = async (req, res, next) => {
     const { from, to, messages } = req.body;
     
     const data = await Messages.create({
-      message: { text: messages },
+      message: { text: messages,isFile:true },
       users: [from, to],
       sender: from,
     });
