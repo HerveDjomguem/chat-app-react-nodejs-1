@@ -47,26 +47,15 @@ module.exports.getAllAudio = async (req, res, next) => {
   }
 }
 
-
-let audioLink="";
-
-module.exports.pathLink = (pathlink) => {
- return audioLink = pathlink;
-}
-
 module.exports.addAudio = async (req, res, next) => {
   try {
-      const { from, to,message } = req.body;
-      console.log(from);
-      console.log(message);
-      const data = await Messages.create({
-        message: { text: "audioLink" },
-        users: [from, to],
-        sender: from,
-        message:message
-      });
+    const { from, to, messages } = req.body;
     
-
+    const data = await Messages.create({
+      message: { text: messages },
+      users: [from, to],
+      sender: from,
+    });
     if (data) return res.json({ msg: "Message added successfully." });
     else return res.json({ msg: "Failed to add message to the database" });
   } catch (ex) {

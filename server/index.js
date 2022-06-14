@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
     console.log('reussi');
     const fileSend = event.file;
     const fileName = fileSend.pathName.replace(/^.*[\\\/]/,'');
-    const pathLink = `"http://localhost:${process.env.PORT}/"${fileName}`;
+    const pathLink = `http://localhost:${process.env.PORT}/${fileName}`;
     const blob = {
       pathLink:pathLink,
       isFile:true

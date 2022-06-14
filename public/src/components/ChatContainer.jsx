@@ -58,6 +58,8 @@ export default function ChatContainer({ currentChat, socket }) {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
+    console.log('from handleSendAudio')
+    console.log(msg.pathLink)
     if (msg) {
       await axios.post(sendAudioRoute, {
         from: data._id,
