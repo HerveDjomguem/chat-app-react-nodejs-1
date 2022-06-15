@@ -61,19 +61,14 @@ export default function ChatContainer({ currentChat, socket }) {
     );
     console.log('from handleSendAudio')
     console.log(msg.pathLink)
-    if (msg) {
-      await axios.post(sendAudioRoute, {
-        from: data._id,
-        to: currentChat._id,
-        messages: msg.pathLink,
-      });
-      
-    }
-
+    await axios.post(sendAudioRoute, {
+      from: data._id,
+      to: currentChat._id,
+      messages: msg.pathLink,
+    }).then(()=>setAudio(""));
   }
 
   useEffect(() => {
-
     socket.current.on("message-file", (msg) => {
       console.log(msg)
       setAudio(msg);
@@ -82,20 +77,21 @@ export default function ChatContainer({ currentChat, socket }) {
 
   }, [audio]);
 
- /*  useEffect(() => {
-    if (socket.current) {
-      socket.current.on("message-file-recieve", (blob) => {
-        setArrivalMessage({ fromSelf: false, message: blob.pathLink, isFile: true });
-      })
-    }
-  }, [audio]); */
-  useEffect(() => {
+  /*  useEffect(() => {
+     if (socket.current) {
+       socket.current.on("message-file-recieve", (blob) => {
+         setArrivalMessage({ fromSelf: false, message: blob.pathLink, isFile: true });
+       })
+     }
+   }, [audio]); */
+
+  /* useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
-  }, []);
+  }, []); */
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);

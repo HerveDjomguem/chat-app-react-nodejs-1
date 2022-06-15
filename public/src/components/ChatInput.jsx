@@ -44,6 +44,7 @@ export default function ChatInput({ handleSendMsg,handleSendAudio }) {
       handleSendMsg(msg);
       setMsg("");
     }
+    setAudio()
   };
   
   const stopRecording = ()=>{

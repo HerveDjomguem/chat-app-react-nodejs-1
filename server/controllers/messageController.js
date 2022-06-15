@@ -25,8 +25,8 @@ module.exports.getMessages = async (req, res, next) => {
 
 module.exports.addMessage = async (req, res, next) => {
   try {
-    const { from, to, messages } = req.body;
-    const data = await Message.create({
+    const { from, to, message } = req.body;
+    const data = await Messages.create({
       message: { text: message,isFile:false },
       users: [from, to],
       sender: from,

@@ -6,61 +6,109 @@ export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [isAdmin, setSetIsAdmin] = useState(undefined);
   useEffect(async () => {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
     setCurrentUserName(data.username);
     setCurrentUserImage(data.avatarImage);
+    setSetIsAdmin(data.isAdmin);
+
   }, []);
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
-  return (
-    <>
-      {currentUserImage && currentUserImage && (
-        <Container>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h3>snappy</h3>
-          </div>
-          <div className="contacts">
-            {contacts.map((contact, index) => {
-              return (
-                <div
-                  key={contact._id}
-                  className={`contact ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
-                  onClick={() => changeCurrentChat(index, contact)}
-                >
+  console.log(contacts);
+  const diplayContact = () => {
+    if (isAdmin === false) {
+      changeCurrentChat(0, contact[0])
+      return (
+        <>
+          {
+            currentUserImage && currentUserImage && (
+              <Container>
+                <div className="brand">
+                  <img src={Logo} alt="logo" />
+                  <h3>snappy</h3>
+                </div>
+                <div className="contacts">
+                  <div>
+                    <div className="avatar">
+                      <img
+                        src={`data:image/svg+xml;base64,${contacts[0].avatarImage}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="username">
+                      <h3> {contacts[0].username}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="current-user">
                   <div className="avatar">
                     <img
-                      src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                      alt=""
+                      src={`data:image/svg+xml;base64,${currentUserImage}`}
+                      alt="avatar"
                     />
                   </div>
                   <div className="username">
-                    <h3>{contact.username}</h3>
+                    <h2>{currentUserName}</h2>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-          <div className="current-user">
-            <div className="avatar">
-              <img
-                src={`data:image/svg+xml;base64,${currentUserImage}`}
-                alt="avatar"
-              />
+              </Container>
+            )}
+        </>
+      );
+    }
+  }
+  return (
+    <>
+      {
+        /* currentUserImage && currentUserImage && (
+          <Container>
+            <div className="brand">
+              <img src={Logo} alt="logo" />
+              <h3>snappy</h3>
             </div>
-            <div className="username">
-              <h2>{currentUserName}</h2>
+            <div className="contacts">
+              {contacts.map((contact, index) => {
+                return (
+                  <div
+                    key={contact._id}
+                    className={`contact ${index === currentSelected ? "selected" : ""
+                      }`}
+                    onClick={() => changeCurrentChat(index, contact)}
+                  >
+                    <div className="avatar">
+                      <img
+                        src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="username">
+                      <h3>{contact.username}</h3>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
-        </Container>
-      )}
+            <div className="current-user">
+              <div className="avatar">
+                <img
+                  src={`data:image/svg+xml;base64,${currentUserImage}`}
+                  alt="avatar"
+                />
+              </div>
+              <div className="username">
+                <h2>{currentUserName}</h2>
+              </div>
+            </div>
+          </Container>
+        ) */
+        diplayContact
+        }
     </>
   );
 }
