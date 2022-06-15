@@ -23,7 +23,7 @@ export default function Contacts({ contacts, changeChat }) {
   console.log(contacts);
   const diplayContact = () => {
     if (isAdmin === false) {
-      changeCurrentChat(0, contact[0])
+      changeCurrentChat(0, contacts[0])
       return (
         <>
           {
@@ -66,7 +66,7 @@ export default function Contacts({ contacts, changeChat }) {
   return (
     <>
       {
-        /* currentUserImage && currentUserImage && (
+        currentUserImage && currentUserImage && (
           <Container>
             <div className="brand">
               <img src={Logo} alt="logo" />
@@ -106,8 +106,8 @@ export default function Contacts({ contacts, changeChat }) {
               </div>
             </div>
           </Container>
-        ) */
-        diplayContact
+        )
+        /* diplayContact */
         }
     </>
   );
