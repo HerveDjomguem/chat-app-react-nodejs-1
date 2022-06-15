@@ -67,9 +67,7 @@ export default function ChatContainer({ currentChat, socket }) {
         to: currentChat._id,
         messages: msg.pathLink,
       });
-      const msgs = [...messages];
-      msgs.push({ fromSelf: true, message: msg.pathLink, isFile: true });
-      setMessages(msgs);
+      
     }
 
   }
@@ -80,18 +78,17 @@ export default function ChatContainer({ currentChat, socket }) {
       console.log(msg)
       setAudio(msg);
       handleSendAudio(msg);
-
     });
 
   }, [audio]);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (socket.current) {
       socket.current.on("message-file-recieve", (blob) => {
         setArrivalMessage({ fromSelf: false, message: blob.pathLink, isFile: true });
       })
     }
-  }, []);
+  }, [audio]); */
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
