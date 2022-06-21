@@ -22,15 +22,15 @@ export default function Welcome() {
 }
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  flex-direction: column;
-  img {
-    height: 20rem;
+ display: flex;
+ justify-content:center;
+ align-items:center;
+ flex-direction:column;
+ color:white;
+  img{
+    height:20rem;
   }
-  span {
+  span{
     color: #4e0eff;
   }
 `;

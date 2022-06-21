@@ -38,3 +38,18 @@ module.exports.addMessage = async (req, res, next) => {
     next(ex);
   }
 };
+module.exports.deleteMessage = async (req,res,next) =>{
+  try {
+    const userId = req.params.id;
+    const deleteMsg = await Messages.findByIdAndRemove(userId, (error, docs) => {
+      if (error) {
+        console.log(error)
+      } else {
+        console.log("item removed ", docs)
+      }
+    })
+    return res.json({ msg: "Message deleted" })
+  }catch (ex) {
+    next(ex)
+  }
+}

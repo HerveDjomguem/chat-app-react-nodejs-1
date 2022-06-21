@@ -73,7 +73,22 @@ module.exports.setAvatar = async (req, res, next) => {
     next(ex);
   }
 };
+module.exports.deleteUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const deleteUsr = await User.findByIdAndRemove(userId, (error, docs) => {
+      if (error) {
+        console.log(error)
+      } else {
+        console.log("removed item", docs)
+      }
+    })
+    return res.json({ msg: "user deleted" })
+  } catch (ex) {
+    next(ex)
+  }
 
+}
 module.exports.logOut = (req, res, next) => {
   try {
     if (!req.params.id) return res.json({ msg: "User id is required " });

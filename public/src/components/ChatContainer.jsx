@@ -9,8 +9,12 @@ import { sendMessageRoute, sendAudioRoute, recieveMessageRoute } from "../utils/
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
+  const deleteMsg = useRef()
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [audio, setAudio] = useState();
+ 
+
+  console.log(deleteMsg);
 
   useEffect(async () => {
     const data = await JSON.parse(
@@ -59,42 +63,44 @@ export default function ChatContainer({ currentChat, socket }) {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
-    console.log('from handleSendAudio')
-    console.log(msg.pathLink)
-    await axios.post(sendAudioRoute, {
-      from: data._id,
-      to: currentChat._id,
-      messages: msg.pathLink,
-    }).then(()=>setAudio(""));
+    if(msg){
+      await axios.post(sendAudioRoute, {
+        from: data._id,
+        to: currentChat._id,
+        messages: msg.pathLink,
+      }).then(()=>setAudio());
+    }
+    setAudio()
   }
 
   useEffect(() => {
     socket.current.on("message-file", (msg) => {
-      console.log(msg)
       setAudio(msg);
       handleSendAudio(msg);
     });
 
   }, [audio]);
 
-  /*  useEffect(() => {
+   useEffect(() => {
      if (socket.current) {
+      setAudio()
        socket.current.on("message-file-recieve", (blob) => {
          setArrivalMessage({ fromSelf: false, message: blob.pathLink, isFile: true });
        })
      }
-   }, [audio]); */
+   }, []); 
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
-  }, []); */
+  }, []); 
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    
   }, [arrivalMessage]);
 
   useEffect(() => {
@@ -127,8 +133,10 @@ export default function ChatContainer({ currentChat, socket }) {
                   className={`message ${message.fromSelf ? "sended" : "recieved"
                     }`}
                 >
-                  <div className="content ">
+                  <div ref={deleteMsg} className="content ">
+                    
                     <audio src={message.message} controls />
+                    <button >del</button>
                   </div>
                 </div>
               </div>

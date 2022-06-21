@@ -90,7 +90,7 @@ export default function Register() {
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            <h1>CHAT AUDIO</h1>
           </div>
           <input
             type="text"
@@ -135,63 +135,61 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
-    img {
-      height: 5rem;
-    }
-    h1 {
-      color: white;
-      text-transform: uppercase;
-    }
-  }
+  background-color: #f8f8f8;
+   .brand{
+       display: flex;
+       align-items: center;
+       gap: 1rem;
+       justify-content: center;
+       img{
+       height: 5rem;
+          }
+       h1{
+           text-transform: uppercase;
+          }
+      }
+       form{
+           display: flex;
+           flex-direction: column;
+           gap:2rem;
+           background-color: #fff;
+           border-radius: 2rem;
+           padding: 3rem 5rem;
+           input{
+               background-color: transparent;
+               padding: 1rem;
+               border: 0.1rem solid gray;
+               border-radius: 0.4rem;
+               width: 100%;
+               font-size: 1rem;
+               &:focus {
+                   border: 0.1rem solid ligthGray;
+                   outline: none;
+               }
+              }
+           button{
+             background-color: blue;
+             color: white;
+             padding: 1rem 2rem;
+             border: none;
+             font-weight: bold;
+             cursor: pointer;
+             border-radius: 0.4rem;
+             font-size: 1rem;
+             text-transform: uppercase;
+             transition: 0.5s ease-in-out;
+             &:hover{
+                 background-color: #4e0eff;
+             }
+           }
+           span{
+            text-transform: uppercase;
+            a {
+                color: #997af0;
+                text-decoration: none;
+                font-weight: bold;
+            }
+           }
+  
+   }`;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background-color: #00000076;
-    border-radius: 2rem;
-    padding: 3rem 5rem;
-  }
-  input {
-    background-color: transparent;
-    padding: 1rem;
-    border: 0.1rem solid #4e0eff;
-    border-radius: 0.4rem;
-    color: white;
-    width: 100%;
-    font-size: 1rem;
-    &:focus {
-      border: 0.1rem solid #997af0;
-      outline: none;
-    }
-  }
-  button {
-    background-color: #4e0eff;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0.4rem;
-    font-size: 1rem;
-    text-transform: uppercase;
-    &:hover {
-      background-color: #4e0eff;
-    }
-  }
-  span {
-    color: white;
-    text-transform: uppercase;
-    a {
-      color: #4e0eff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  }
-`;

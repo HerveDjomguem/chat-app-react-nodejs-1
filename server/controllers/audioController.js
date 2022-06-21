@@ -46,16 +46,21 @@ module.exports.getAllAudio = async (req, res, next) => {
     next(ex)
   }
 }
-
+var BlobUrl
+module.exports.getUrl = async (blobUrl)=>{
+  BlobUrl = blobUrl
+}
 module.exports.addAudio = async (req, res, next) => {
   try {
-    const { from, to, messages } = req.body;
+    const { from, to } = req.body;
+    if(BlobUrl){
+      var data = await Messages.create({
+        message: { text: BlobUrl,isFile:true },
+        users: [from, to],
+        sender: from,
+      });
+    }
     
-    const data = await Messages.create({
-      message: { text: messages,isFile:true },
-      users: [from, to],
-      sender: from,
-    });
     if (data) return res.json({ msg: "Message added successfully." });
     else return res.json({ msg: "Failed to add message to the database" });
   } catch (ex) {

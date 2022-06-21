@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const audioRoutes = require('./routes/audio');
-const {pathLink} = require('./controllers/audioController')
+const {getUrl} = require('./controllers/audioController')
 const app = express();
 const socket = require("socket.io");
 const socketIoFileUpload = require('socketio-file-upload');
@@ -35,7 +35,7 @@ const server = app.listen(process.env.PORT, () =>
 );
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });
@@ -56,13 +56,13 @@ io.on("connection", (socket) => {
     console.log('reussi');
     const fileSend = event.file;
     const fileName = fileSend.pathName.replace(/^.*[\\\/]/,'');
-    const pathLink = `http://localhost:${process.env.PORT}/${fileName}`;
+    const pathLink = `http://192.168.8.104:${process.env.PORT}/${fileName}`;
     const blob = {
       pathLink:pathLink,
       isFile:true
     }  
     BLOB=blob;
-   
+    getUrl(BLOB.pathLink)
     io.emit("message-file",blob);
   });
   
